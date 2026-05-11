@@ -36,7 +36,7 @@ export class app {
         cam.addChild(new freecam());
 
 
-        new HDRLoader().load("/resources/hdr/school.hdr", (texture) => {
+        new HDRLoader().load("/resources/hdr/studio_2.hdr", (texture) => {
             texture.mapping = THREE.EquirectangularReflectionMapping;
 
             sc.object.background = texture;
