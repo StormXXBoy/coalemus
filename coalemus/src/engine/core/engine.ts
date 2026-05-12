@@ -36,6 +36,8 @@ export class engine {
 
         this.renderer = new THREE.WebGLRenderer({ canvas: this.view });
         this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         window.addEventListener("resize", () => {
             this.onViewResize();

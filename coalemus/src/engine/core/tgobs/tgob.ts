@@ -11,6 +11,8 @@ export class tgob<T extends THREE.Object3D = THREE.Object3D> extends gob {
     constructor(object: T) {
         super();
         this.object = object;
+        this.object.castShadow = true;
+        this.object.receiveShadow = true;
 
         this.position = object.position;
         this.rotation = object.rotation;

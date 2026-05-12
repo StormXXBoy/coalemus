@@ -18,7 +18,6 @@ export class app {
         }
     
         this.engine.attach(canvas);
-        if (this.engine.renderer) this.engine.renderer.shadowMap.enabled = true;
     
         const sc = new scene();
     
@@ -35,33 +34,29 @@ export class app {
         sc.addChild(cam);
         cam.addChild(new freecam());
 
+        // new HDRLoader().load("/resources/hdr/studio_2.hdr", (texture) => {
+        //     texture.mapping = THREE.EquirectangularReflectionMapping;
 
-        new HDRLoader().load("/resources/hdr/studio_2.hdr", (texture) => {
-            texture.mapping = THREE.EquirectangularReflectionMapping;
-
-            sc.object.background = texture;
-            sc.object.environment = texture;
-        });
+        //     sc.object.background = texture;
+        //     sc.object.environment = texture;
+        // });
     
         this.engine.setCurrentScene(sc);
 
-        const sun = new light(new THREE.DirectionalLight(0xffffff, 0));
+        const sun = new light(new THREE.DirectionalLight(0xffffff, 1));
         sun.rotation.x = -Math.PI / 4;
         sun.object.castShadow = true;
+        (sun.object as THREE.DirectionalLight).shadow.mapSize.width = 2048;
+        (sun.object as THREE.DirectionalLight).shadow.mapSize.height = 2048;
         sc.addChild(sun);
-
-        const spot = new light(new THREE.PointLight(0xffffff, 3));
-        spot.position.set(0, -1, 0);
-        spot.object.castShadow = true;
-        sc.addChild(spot);
     
         const cube = new mesh(new THREE.Mesh(new THREE.PlaneGeometry(), new THREE.MeshPhysicalMaterial({
         color: 0xffffff,
-        metalness: 0.0,
+        metalness: 0.4,
         roughness: 0.1,
         transmission: 0.0, // glass
         thickness: 0.5,
-        clearcoat: 1.0
+        clearcoat: 0.5
         })));
         cube.rotation.x = -Math.PI / 2;
         cube.position.y = -3;
